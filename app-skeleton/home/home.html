@@ -1,0 +1,50 @@
+
+<div class="w3-margin" ng-controller="HomeController">
+
+
+  <h1>Hmm oui</h1>
+  <br>
+  <p>This is the <i>home</i> page.</p>
+
+  <p>The <i>op1</i> variable is now set to: {{op1}}</p>
+  <p>The <i>op2</i> variable is now set to: {{op2}}</p>
+  <p>The <i>operation</i> variable is now set to: {{operation}}</p>
+
+
+  <h2>Change it! </h2>
+
+  <input class="w3-input w3-animate-input" type="number" ng-model="op1">
+  <span class="bar"></span>
+  <label class="w3-label w3-text-dark-grey">op1</label>
+  <br><br>
+
+
+  <input class="w3-input w3-animate-input" type="number" ng-model="op2">
+  <span class="bar"></span>
+  <label class="w3-label w3-text-dark-grey">op2</label>
+  <br><br>
+
+  <p> Operation </p>
+
+  <label>
+    <input type="radio" ng-model="operation" value="add">
+    add
+  </label><br/>
+  <label>
+    <input type="radio" ng-model="operation" value="sub">
+    sub
+  </label><br/>
+  <label>
+    <input type="radio" ng-model="operation" value="mul">
+    mul
+  </label></br>
+  <label>
+    <input type="radio" ng-model="operation" value="div">
+    div
+  </label><br/>
+
+  <button ng-click="calc()"
+    type="button" class="w3-btn w3-red w3-round-small">Calculate !</button>
+
+
+</div>
