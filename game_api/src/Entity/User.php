@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,22 @@ class User
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastUpdate;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Factory::class)
+     */
+    private $factories;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Item::class)
+     */
+    private $items;
+
+    public function __construct()
+    {
+        $this->factories = new ArrayCollection();
+        $this->items = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +104,54 @@ class User
     public function setLastUpdate(?\DateTimeInterface $lastUpdate): self
     {
         $this->lastUpdate = $lastUpdate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Factory[]
+     */
+    public function getFactories(): Collection
+    {
+        return $this->factories;
+    }
+
+    public function addFactory(Factory $factory): self
+    {
+        if (!$this->factories->contains($factory)) {
+            $this->factories[] = $factory;
+        }
+
+        return $this;
+    }
+
+    public function removeFactory(Factory $factory): self
+    {
+        $this->factories->removeElement($factory);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Item[]
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function addItem(Item $item): self
+    {
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+        }
+
+        return $this;
+    }
+
+    public function removeItem(Item $item): self
+    {
+        $this->items->removeElement($item);
 
         return $this;
     }
