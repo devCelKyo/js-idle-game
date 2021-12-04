@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Cost;
 use App\Repository\FactoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +32,11 @@ class Factory
      * @ORM\Column(type="integer")
      */
     private $rate;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Cost::class, cascade={"persist", "remove"})
+     */
+    private $cost;
 
     public function getId(): ?int
     {
@@ -71,5 +77,37 @@ class Factory
         $this->rate = $rate;
 
         return $this;
+    }
+
+    public function getCost(): ?Cost
+    {
+        return $this->cost;
+    }
+
+    public function setCost(?Cost $cost): self
+    {
+        $this->cost = $cost;
+
+        return $this;
+    }
+
+    public function getUpgradeCost(): ?Cost
+    {
+        $level = $this->getLevel();
+        $baseCost = $this->getCost();
+        
+        $upgradeCost = new Cost();
+        $upgradeCostAmounts = array();
+
+        foreach($baseCost->getItems() as $item) {
+            $newCost->addItem($item);
+        }
+
+        foreach($baseCost->getAmounts() as $amount) {
+            $upgradeCostAmounts[] = $amount*pow(1.5, $level);
+        }
+        $upgradeCost->setAmounts($upgradeCostAmounts);
+
+        return $upgradeCost;
     }
 }

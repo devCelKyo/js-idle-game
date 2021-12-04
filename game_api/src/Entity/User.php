@@ -89,11 +89,39 @@ class User
         return $this->money;
     }
 
+    public function getBalance(): ?int
+    {
+        return $this->getMoney();
+    }
+
     public function setMoney(int $money): self
     {
         $this->money = $money;
 
         return $this;
+    }
+
+    public function giveMoney(int $money): self
+    {
+        $this->setMoney($this->getBalance() + $money);
+
+        return $this;
+    }
+
+    public function removeMoney(int $money): self
+    {
+        $this->giveMoney(-1*$money);
+
+        return $this;
+    }
+
+    public function getRate(): ?int
+    {
+        $rate = 0;
+        foreach($this->getFactories() as $factory)
+        {
+            $rate = $rate + $factory->getRate();
+        }
     }
 
     public function getLastUpdate(): ?\DateTimeInterface
@@ -138,6 +166,14 @@ class User
     public function getItems(): Collection
     {
         return $this->items;
+    }
+
+    /**
+     * @return Collection|Item[]
+     */
+    public function getInventory(): Collection
+    {
+        return $this->getInventory();
     }
 
     public function addItem(Item $item): self
