@@ -84,6 +84,15 @@ class User
         return $this;
     }
 
+    public function setPlainPassword(string $password): self
+    {
+        $hashedPassword = $password; // Ligne à changer
+
+        $this->password = $hashedPassword;
+
+        return $this;
+    }
+
     public function getMoney(): ?int
     {
         return $this->money;
