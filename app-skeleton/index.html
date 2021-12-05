@@ -12,6 +12,7 @@
     ––––––––––––––––––––––––––––––––––––––––––––––––––-->
     <link rel="stylesheet" href="css/bootstrap-5.1.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome-4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
 
   </head>
 
@@ -19,9 +20,27 @@
 
     <!-- header
     ––––––––––––––––––––––––––––––––––––––––––––––––––-->
-    <div class="w3-container w3-teal">
-        <h1>Skeleton App</h1>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Nom du jeu</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" ui-sref="home">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" ui-sref="game">Jouer</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" ui-sref="signin">Inscription</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
 
     <!-- dynamic content placeholder
@@ -33,13 +52,15 @@
     ––––––––––––––––––––––––––––––––––––––––––––––––––-->
     <script src="jslibs/angular.min.js"></script>
     <script src="jslibs/angular-ui-router.min.js"></script>
+    <script src="css/bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
+
 
     <!-- controllers
     ––––––––––––––––––––––––––––––––––––––––––––––––––-->
     <script src="js/myapp.js"></script>
     <script src="js/samplefactory.js"></script>
     <script src="home/homecontroller.js"></script>
-    <script src="page2/page2controller.js"></script>
+    <script src="game/gamecontroller.js"></script>
 
 
   </body>

@@ -10,10 +10,15 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
        templateUrl: 'home/home.html'
     })
 
-    .state('page2', {
-       url: '/page2',
-       templateUrl: 'page2/page2.html'
-    });
+    .state('game', {
+       url: '/game',
+       templateUrl: 'game/game.html'
+    })
+
+    .state('signin', {
+      url: '/signin',
+      templateUrl: 'signin/signin.html'
+   });
 
     $urlRouterProvider.otherwise('home');
 
