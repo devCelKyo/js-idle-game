@@ -20,7 +20,7 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $username;
 
@@ -86,11 +86,16 @@ class User
 
     public function setPlainPassword(string $password): self
     {
-        $hashedPassword = $password; // Ligne à changer
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Ligne à changer
 
         $this->password = $hashedPassword;
 
         return $this;
+    }
+
+    public function checkPassword(string $password): bool
+    {
+        return password_verify($password, $this->password);
     }
 
     public function getMoney(): ?int
