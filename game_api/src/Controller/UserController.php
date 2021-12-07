@@ -2,9 +2,6 @@
 
 namespace App\Controller;
 
-use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use JMS\Serializer\SerializerInterface;
 
 use App\Classes\JSONResponse;
@@ -47,9 +44,8 @@ class UserController extends AbstractController
     /**
      * @Route("/user/{id}", name="user_get", methods={"GET"})
      */
-    public function getUser(): Response
+    public function findUser(User $user): Response
     {
-        $user = new User();
         return $this->createResponse($user);
     }
 
@@ -120,6 +116,8 @@ class UserController extends AbstractController
             if($user->checkPassword($password)) {
                 $error = false;
                 $message = ["message" => "Connexion réussie.", "account" => $user];
+                $user->setLastUpdate(new \DateTime());
+                $this->getDoctrine()->getManager()->flush();
             }
             else {
                 $error = true;

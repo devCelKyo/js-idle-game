@@ -136,6 +136,7 @@ class User
         {
             $rate = $rate + $factory->getRate();
         }
+        return $rate;
     }
 
     public function getLastUpdate(): ?\DateTimeInterface
@@ -147,6 +148,26 @@ class User
     {
         $this->lastUpdate = $lastUpdate;
 
+        return $this;
+    }
+
+    public function updatePlayer(): self
+    {
+        $now = new \DateTime();
+        $now = $now->getTimestamp();
+        $lastUpdate = $this->getLastUpdate()->getTimestamp();
+        $diff = $now - $lastUpdate;
+
+        $this->giveMoney($diff*$this->getRate());
+        $this->setLastUpdate(new \DateTime());
+
+        return $this;
+    }
+
+    public function clickPlayer(): self
+    {
+        $this->giveMoney(1);
+        
         return $this;
     }
 
