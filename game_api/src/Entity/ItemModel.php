@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ItemRepository;
+use App\Repository\ItemModelRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ItemRepository::class)
+ * @ORM\Entity(repositoryClass=ItemModelRepository::class)
  */
-class Item
+class ItemModel
 {
     /**
      * @ORM\Id
@@ -23,7 +23,7 @@ class Item
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $price;
 
@@ -54,7 +54,7 @@ class Item
         return $this->price;
     }
 
-    public function setPrice(int $price): self
+    public function setPrice(?int $price): self
     {
         $this->price = $price;
 

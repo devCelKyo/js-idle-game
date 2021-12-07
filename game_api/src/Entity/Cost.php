@@ -20,14 +20,14 @@ class Cost
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Item::class)
-     */
-    private $items;
-
-    /**
      * @ORM\Column(type="array")
      */
     private $amounts = [];
+
+    /**
+     * @ORM\ManyToMany(targetEntity=ItemModel::class)
+     */
+    private $items;
 
     public function __construct()
     {
@@ -39,30 +39,6 @@ class Cost
         return $this->id;
     }
 
-    /**
-     * @return Collection|Item[]
-     */
-    public function getItems(): Collection
-    {
-        return $this->items;
-    }
-
-    public function addItem(Item $item): self
-    {
-        if (!$this->items->contains($item)) {
-            $this->items[] = $item;
-        }
-
-        return $this;
-    }
-
-    public function removeItem(Item $item): self
-    {
-        $this->items->removeElement($item);
-
-        return $this;
-    }
-
     public function getAmounts(): ?array
     {
         return $this->amounts;
@@ -71,6 +47,30 @@ class Cost
     public function setAmounts(array $amounts): self
     {
         $this->amounts = $amounts;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ItemModel[]
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function addItem(ItemModel $item): self
+    {
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+        }
+
+        return $this;
+    }
+
+    public function removeItem(ItemModel $item): self
+    {
+        $this->items->removeElement($item);
 
         return $this;
     }

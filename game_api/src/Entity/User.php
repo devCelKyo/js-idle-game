@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\ItemModel;
+use App\Entity\Cost;
+
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -40,19 +43,18 @@ class User
     private $lastUpdate;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Item::class)
-     */
-    private $items;
-
-    /**
      * @ORM\OneToMany(targetEntity=Factory::class, mappedBy="user")
      */
     private $factories;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Inventory::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $inventory;
+
     public function __construct()
     {
         $this->factories = new ArrayCollection();
-        $this->items = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -168,38 +170,6 @@ class User
     }
 
     /**
-     * @return Collection|Item[]
-     */
-    public function getItems(): Collection
-    {
-        return $this->items;
-    }
-
-    /**
-     * @return Collection|Item[]
-     */
-    public function getInventory(): Collection
-    {
-        return $this->getInventory();
-    }
-
-    public function addItem(Item $item): self
-    {
-        if (!$this->items->contains($item)) {
-            $this->items[] = $item;
-        }
-
-        return $this;
-    }
-
-    public function removeItem(Item $item): self
-    {
-        $this->items->removeElement($item);
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Factory[]
      */
     public function getFactories(): Collection
@@ -227,5 +197,27 @@ class User
         }
 
         return $this;
+    }
+
+    public function getInventory(): ?Inventory
+    {
+        return $this->inventory;
+    }
+
+    public function setInventory(?Inventory $inventory): self
+    {
+        $this->inventory = $inventory;
+
+        return $this;
+    }
+
+    public function canPay(Cost $item): bool 
+    {
+        // wip
+    }
+
+    public function pay(Cost $item): bool
+    {
+        // wip
     }
 }
