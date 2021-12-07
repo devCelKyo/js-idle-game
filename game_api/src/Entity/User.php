@@ -40,14 +40,14 @@ class User
     private $lastUpdate;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Factory::class)
-     */
-    private $factories;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Item::class)
      */
     private $items;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Factory::class, mappedBy="user")
+     */
+    private $factories;
 
     public function __construct()
     {
@@ -153,13 +153,9 @@ class User
 
     public function updatePlayer(): self
     {
-        $now = new \DateTime();
-        $now = $now->getTimestamp();
-        $lastUpdate = $this->getLastUpdate()->getTimestamp();
-        $diff = $now - $lastUpdate;
-
-        $this->giveMoney($diff*$this->getRate());
-        $this->setLastUpdate(new \DateTime());
+        foreach($this->getFactories() as $factory) {
+            $factory->updateFactory();
+        }
 
         return $this;
     }
@@ -168,30 +164,6 @@ class User
     {
         $this->giveMoney(1);
         
-        return $this;
-    }
-
-    /**
-     * @return Collection|Factory[]
-     */
-    public function getFactories(): Collection
-    {
-        return $this->factories;
-    }
-
-    public function addFactory(Factory $factory): self
-    {
-        if (!$this->factories->contains($factory)) {
-            $this->factories[] = $factory;
-        }
-
-        return $this;
-    }
-
-    public function removeFactory(Factory $factory): self
-    {
-        $this->factories->removeElement($factory);
-
         return $this;
     }
 
@@ -223,6 +195,36 @@ class User
     public function removeItem(Item $item): self
     {
         $this->items->removeElement($item);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Factory[]
+     */
+    public function getFactories(): Collection
+    {
+        return $this->factories;
+    }
+
+    public function addFactory(Factory $factory): self
+    {
+        if (!$this->factories->contains($factory)) {
+            $this->factories[] = $factory;
+            $factory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactory(Factory $factory): self
+    {
+        if ($this->factories->removeElement($factory)) {
+            // set the owning side to null (unless already changed)
+            if ($factory->getUser() === $this) {
+                $factory->setUser(null);
+            }
+        }
 
         return $this;
     }

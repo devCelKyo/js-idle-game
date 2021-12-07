@@ -19,40 +19,29 @@ class Factory
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $level;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $rate;
+    private $lastUpdate;
 
     /**
-     * @ORM\OneToOne(targetEntity=Cost::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=FactoryModel::class, inversedBy="factories")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $cost;
+    private $model;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="factories")
+     */
+    private $user;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getLevel(): ?int
@@ -69,32 +58,13 @@ class Factory
 
     public function getRate(): ?int
     {
-        return $this->rate;
-    }
-
-    public function setRate(int $rate): self
-    {
-        $this->rate = $rate;
-
-        return $this;
-    }
-
-    public function getCost(): ?Cost
-    {
-        return $this->cost;
-    }
-
-    public function setCost(?Cost $cost): self
-    {
-        $this->cost = $cost;
-
-        return $this;
+        return $this->getModel()->getBaseRate()*pow(1.5, $this->getLevel());
     }
 
     public function getUpgradeCost(): ?Cost
     {
         $level = $this->getLevel();
-        $baseCost = $this->getCost();
+        $baseCost = $this->getModel()->getCost();
         
         $upgradeCost = new Cost();
         $upgradeCostAmounts = array();
@@ -109,5 +79,55 @@ class Factory
         $upgradeCost->setAmounts($upgradeCostAmounts);
 
         return $upgradeCost;
+    }
+
+    public function getLastUpdate(): ?\DateTimeInterface
+    {
+        return $this->lastUpdate;
+    }
+
+    public function setLastUpdate(?\DateTimeInterface $lastUpdate): self
+    {
+        $this->lastUpdate = $lastUpdate;
+
+        return $this;
+    }
+
+    public function updateFactory(): self
+    {
+        $now = new \DateTime();
+        $now = $now->getTimestamp();
+        $lastUpdate = $this->getLastUpdate()->getTimestamp();
+
+        $diff = $now - $lastUpdate;
+
+        $this->getUser()->giveMoney($diff*$this->getRate());
+        $this->setLastUpdate(new \DateTime());
+
+        return $this;
+    }
+
+    public function getModel(): ?FactoryModel
+    {
+        return $this->model;
+    }
+
+    public function setModel(?FactoryModel $model): self
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
