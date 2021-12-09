@@ -1,0 +1,53 @@
+/* Commun à toutes les pages */
+
+body {
+    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+
+
+    position: relative;
+    background: radial-gradient(ellipse at bottom, rgb(34, 34, 34) 0%, hsl(0, 0%, 0%) 100%);
+    background-attachment: fixed;
+    
+    color:aliceblue
+
+}
+
+
+    /* nav */
+
+nav, h1 {
+    font-family: 'Press Start 2P', cursive;
+
+}
+
+h1 {
+    color: #c6e2ff;
+  text-shadow:
+    0 0 6px rgba(202,228,225,0.92),
+    0 0 30px rgba(202,228,225,0.34),
+    0 0 12px rgba(30,132,242,0.52),
+    0 0 21px rgba(30,132,242,0.92),
+    0 0 34px rgba(30,132,242,0.78),
+    0 0 54px rgba(30,132,242,0.92);
+}
+
+.nom {
+    padding-right: 15%;
+}
+.navelt {
+
+    padding-right: 20%;
+}
+
+
+
+
+/* home */
+
+
+
+/* signin */
+
+
+/* game */
