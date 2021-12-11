@@ -14,6 +14,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state('signin', {
       url: '/signin',
       templateUrl: 'pages/signin/signin.html'
+   })
+   .state('login', {
+      url:'/login',
+      templateUrl: 'pages/login/login.html'
    });
 
     $urlRouterProvider.otherwise('home');
