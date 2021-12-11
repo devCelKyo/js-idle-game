@@ -1,15 +1,10 @@
+app.factory('sampleFactory', function() {
+	
+	var sampleFunction = function() {
+		console.log('hello, I am sampleFunction!');
+	}
 
-myApp.factory('sampleFactory', function() {
-
-  var sampleFunction=function() {
-
-    console.log('hello, I am sampleFunction!');
-    // any code here
-
-  }
-
-  return {
-    sampleFunction : sampleFunction
-  };
-
+	return {
+		sampleFunction : sampleFunction
+	};
 });
