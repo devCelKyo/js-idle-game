@@ -10,6 +10,10 @@ myApp.controller('HomeController', ["$scope", "$state", "$http",
       $state.go("game");
     }
 
+    $scope.gotosignin = function() {
+      $state.go("signin");
+    }
+
     $scope.op1 = 0;
     $scope.op2 = 0;
     $scope.operation = "";
