@@ -25,6 +25,7 @@ class UserController extends AbstractController
         $data = $this->serializer->serialize($object, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
 
         return $response;
     }
@@ -69,7 +70,7 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent());
         $username = $data->username;
         $password = $data->password;
-        $money = $data->money;
+        $money = 0;
 
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $error = false;
