@@ -6,6 +6,7 @@ use JMS\Serializer\SerializerInterface;
 
 use App\Classes\JSONResponse;
 use App\Entity\User;
+use App\Entity\Inventory;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,6 +72,8 @@ class UserController extends AbstractController
         $username = $data->username;
         $password = $data->password;
         $money = 0;
+        $inventory = new Inventory();
+
 
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $error = false;
@@ -83,6 +86,7 @@ class UserController extends AbstractController
             $user->setUsername($username);
             $user->setPlainPassword($password);
             $user->setMoney($money);
+            $user->setInventory($inventory);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

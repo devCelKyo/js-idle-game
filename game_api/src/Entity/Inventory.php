@@ -104,16 +104,48 @@ class Inventory
 
     public function getAmount(ItemModel $item): int
     {
-        // wip
+        for ($i = 0; $i < count($this->getAmounts()); $i++) {
+            if ($this->getItems()[$i] == $item) {
+                return $this->getAmounts()[$i];
+            }
+        }
+        return 0;
     }
 
-    public function hasEnough(Cost $item): bool 
+    public function hasEnough(Cost $cost): bool 
     {
-        // wip
+        for ($i = 0; $i < count($cost->getAmounts()); $i++) {
+            $model = $this->getItems()[$i];
+            $amount = $this->getAmounts()[$i];
+
+            if ($this->getAmount($model) < $amount) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    public function withdraw(Cost $item): bool
+    public function withdraw(ItemModel $item, int $amount): bool 
     {
-        // wip
+        for ($i = 0; $i < count($this->getAmounts()); $i++) {
+            if ($this->getItems()[$i] == $item) {
+                $this->amounts[$i] = $this->amounts[$i] - $amount;
+            }
+        }
+
+        return true;
+    }
+
+    public function withdrawCost(Cost $cost): bool
+    {
+        if ($this->hasEnough($cost)) {
+            for ($i = 0; $i < count($cost->getAmounts()); $i++) {
+                $this->withdraw($cost->getItems()[$i], $cost->getAmounts()[$i]);
+            }
+            return true;
+        }
+
+        return false;
     }
 }

@@ -43,7 +43,7 @@ class User
     private $lastUpdate;
 
     /**
-     * @ORM\OneToMany(targetEntity=Factory::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Factory::class, mappedBy="user", cascade={"persist"})
      */
     private $factories;
 
@@ -211,13 +211,13 @@ class User
         return $this;
     }
 
-    public function canPay(Cost $item): bool 
+    public function canPay(Cost $cost): bool 
     {
-        // wip
+        return $this->getInventory()->hasEnough($cost);
     }
 
-    public function pay(Cost $item): bool
+    public function pay(Cost $cost): bool
     {
-        // wip
+        return $this->getInventory()->withdrawCost($cost);
     }
 }

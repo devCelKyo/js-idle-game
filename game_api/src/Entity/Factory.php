@@ -29,7 +29,7 @@ class Factory
     private $lastUpdate;
 
     /**
-     * @ORM\ManyToOne(targetEntity=FactoryModel::class, inversedBy="factories")
+     * @ORM\ManyToOne(targetEntity=FactoryModel::class, inversedBy="factories", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $model;

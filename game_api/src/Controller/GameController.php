@@ -7,7 +7,9 @@ use JMS\Serializer\SerializerInterface;
 use App\Classes\JSONResponse;
 use App\Entity\User;
 use App\Entity\Item;
+use App\Entity\ItemModel;
 use App\Entity\Factory;
+use App\Entity\FactoryModel;
 use App\Entity\Cost;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,5 +55,48 @@ class GameController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         return new Response(Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/buy_factory/{id}/{model_id}", name="buy_factory", methods={"POST"})
+     */
+    public function buyFactory(User $user, int $model_id): Response 
+    {
+        $model = $this->getDoctrine()->getRepository(FactoryModel::class)->find($model_id);
+        $cost = $model->getCost();
+
+        $error = true;
+        $message = "Pas assez de thunes";
+        if ($user->canPay($cost)) {
+            $factory = $model->createFactory();
+            $user->pay($cost);
+            $user->addFactory($factory);
+
+            $error = false;
+            $message = "Factory achetée avec succès.";
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+
+        $response = new JSONResponse();
+        $response->setError($error);
+        $response->setMessage($message);
+
+        return $this->createResponse($response);
+    }
+
+    /**
+     * @Route("/factory", name="get_factories", methods={"GET"})
+     */
+    public function getFactories(): Response
+    {
+        $factories = $this->getDoctrine()->getRepository(FactoryModel::class)->findAll();
+        
+        $response = new JSONResponse();
+        $response->setError(false);
+        $response->setMessage($factories);
+
+        return $this->createResponse($response);
     }
 }
