@@ -20,7 +20,7 @@ myApp.controller('SigninController', ["$scope", "$state","sampleFactory", "$http
       };
       donnee = JSON.stringify(donnee);
       console.log(donnee);
-      $http.post('http://localhost:20000', donnee)
+      $http.post('http://localhost:8000/register', donnee)
       .then(function(response) {
           console.log(response.data);
       });
