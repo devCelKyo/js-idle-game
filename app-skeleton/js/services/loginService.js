@@ -20,7 +20,7 @@ app.factory('loginService', ['$http', '$location', 'sessionService', function($h
             sessionService.destroy('user');
             $location.path('/home');
         },
-        islogged:function() {
+        isLogged:function() {
             if (sessionService.get('user')) {
                 return true;
             }

@@ -24,7 +24,23 @@ app.controller('SigninController', ["$scope", "$state","sampleFactory", "$http",
 		
 		$http.post('http://localhost:8000/register', donnee)
 		.then(function(response) {
-			console.log(response.data);
+			let data = response.data;
+			let error = data.error;
+			let icon = '';
+
+			if (!error) {
+				icon = 'success';
+			}
+			else {
+				icon = 'error';
+			}
+
+			Swal.fire({icon: icon, title: data.message})
+				.then(function() {
+					if (!error) {
+						$state.go("home");
+					}
+				});
 		});
 		};
 

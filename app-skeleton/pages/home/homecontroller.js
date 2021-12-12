@@ -1,23 +1,9 @@
-app.controller('HomeController', ["$scope", "$state", "$http",
+app.controller('HomeController', ["$scope", "loginService",
+	function($scope, loginService) {
+		$scope.loginService = loginService;
 
-	function($scope, $state, $http) {
-
-		console.log('this is the homecontroller, hi!');
-
-		$scope.userString = "default value";
-
-		$scope.gotogame = function() {
-			$state.go("game");
+		$scope.ok = function() {
+			return true;
 		}
-
-		$scope.gotosignin = function() {
-			$state.go("signin");
-		}
-
-		$scope.op1 = 0;
-		$scope.op2 = 0;
-		$scope.operation = "";
-  }
-
-  
+	}
 ]);

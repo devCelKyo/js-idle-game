@@ -1,4 +1,4 @@
-app.factory('sessionService', ['$http', function($http) {
+app.factory('sessionService', function() {
     return {
         set:function(key, value) {
             return sessionStorage.setItem(key, value);
@@ -10,4 +10,4 @@ app.factory('sessionService', ['$http', function($http) {
             return sessionStorage.removeItem(key);
         }
     };
-}]);
+});

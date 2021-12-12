@@ -22,3 +22,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('home');
 });
+
+app.controller("navbarController", ["$scope", "loginService", function($scope, loginService) {
+	$scope.loginService = loginService;
+}]);

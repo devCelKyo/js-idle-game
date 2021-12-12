@@ -40,6 +40,10 @@ h1 {
     padding-right: 20%;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 
 
 
