@@ -8,6 +8,9 @@ app.factory('sessionService', function() {
         },
         destroy:function(key) {
             return sessionStorage.removeItem(key);
+        },
+        getUser:function() {
+            return JSON.parse(sessionStorage.getItem("user"));
         }
     };
 });

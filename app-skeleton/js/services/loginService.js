@@ -8,7 +8,7 @@ app.factory('loginService', ['$http', '$location', 'sessionService', function($h
                     if (!rep.error) {
                         let userJson = JSON.stringify(rep.message.account);
                         sessionService.set('user', userJson);
-                        $location.path('/home');
+                        $location.path('/game');
                     }
                     else {
                         scope.msgtext = rep.message.message;
