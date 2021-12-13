@@ -1,9 +1,6 @@
-app.controller('GameController', ["$scope", "$state","sampleFactory",
-	function($scope, $state, sampleFactory) {
-		console.log('this is the gamecontroller, hi!');
-		sampleFactory.sampleFunction();
-
-		let user = JSON.parse(sessionStorage.user);
-		$scope.username = user.username;
-	}
+app.controller('GameController', ["$scope", "$state", "sessionService",
+	
+	function($scope, $state, sessionService) {
+		$scope.user = sessionService.getUser();
+	}	
 ]);
