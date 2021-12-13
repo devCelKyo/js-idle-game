@@ -1,8 +1,40 @@
 <div class="container" ng-controller="loginController">
-    <form novalidate>
-        <input type="text" ng-model="username">
-        <input type="password" ng-model="password">
 
-        <button role="button" ng-click="login()">Connexion</button>
+    <br>
+    <h1>Connecte toi pour pouvoir commencer à jouer !</h1>
+    <br>
+    
+    <form>
+        
+        <div class="mb-3">
+          <label class="form-label" >Nom d'utilisateur</label>
+          <input type="text" class="form-control" ng-model="username">
+        </div>
+    
+        <div class="mb-3">
+          <label class="form-label" >Mot de passe</label>
+          <input type="password" class="form-control" ng-model="password" >
+        </div>
+        
+        </br>
+    
+        <button type="submit" class="btn btn-danger" ng-click="login()">Se connecter</button>
+    
     </form>
+    <br><br>
+
+    <p>
+        <h2> Mot de passe oublié ?</h2>
+        <br>
+        <a class="btn btn-warning" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Clique ici fumier...
+        </a>
+    </p>
+
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body carte">
+          Recrée toi un compte c'est pas le site de la NASA ici.
+        </div>
+      </div>
+
 </div>
