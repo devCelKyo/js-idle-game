@@ -1,6 +1,27 @@
-app.controller('GameController', ["$scope", "$state", "sessionService",
+app.controller('GameController', ["$scope", "$http","sessionService", "gameService",
 	
-	function($scope, $state, sessionService) {
-		$scope.user = sessionService.getUser();
+	function($scope, $http, sessionService, gameService) {
+		$scope.sessionService = sessionService;
+
+		$scope.click = function() {
+			gameService.click();
+		}
+
+		$http.get("http://localhost:8000/factory")
+			.then(function(response) {
+				$scope.factories = response.data.message;
+			});
+		
+		$scope.buyFactory = function(id) {
+			gameService.buyFactory(id);
+			$scope.rate = gameService.getRate();
+		}
+
+		$scope.myFactories = sessionService.getUser().factories;
+		$scope.claim = function() {
+			gameService.claim();
+		}
+
+		$scope.rate = gameService.getRate();
 	}	
 ]);

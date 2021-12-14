@@ -30,7 +30,7 @@ class GameController extends AbstractController
         $data = $this->serializer->serialize($object, 'json');
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
 
         return $response;
     }
@@ -51,10 +51,18 @@ class GameController extends AbstractController
      */
     public function updatePlayer(User $user): Response 
     {
+        $money = $user->getMoney();
         $user->updatePlayer();
+        $diff = $user->getMoney() - $money;
+        $message = "Vous avez récupéré ".$diff. " pièce(s) d'or";
+
         $this->getDoctrine()->getManager()->flush();
 
-        return new Response(Response::HTTP_OK);
+        $response = new JSONResponse();
+        $response->setError(false);
+        $response->setMessage($message);
+
+        return $this->createResponse($response);
     }
 
     /**
@@ -99,4 +107,4 @@ class GameController extends AbstractController
 
         return $this->createResponse($response);
     }
-}
+}   

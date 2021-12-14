@@ -4,7 +4,8 @@ app.factory('databaseService', ["$http", "sessionService", function($http, sessi
             let user = sessionService.getUser();
             $http.get("http://localhost:8000/user/"+user.id)
                 .then(function(response) {
-                    // wip
+                    user = JSON.stringify(response.data);
+                    sessionService.set("user", user);
                 });
         }
     }
