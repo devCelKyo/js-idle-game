@@ -24,7 +24,7 @@
 		<div class="col-lg-6">
 			<h2>Mes Usines</h2>
 			<div class="factory-grid">
-				<div class="card" ng-repeat="factory in myFactories">
+				<div class="card" ng-repeat="factory in myFactories()">
 					<img class="card-img-top" src="img/factories/{{ factory.model.icon }}">
 					<div class="card-body">
 						<h5 class="card-title" style="color: black;">{{ factory.model.name }}</h5>

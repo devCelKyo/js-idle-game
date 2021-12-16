@@ -17,7 +17,9 @@ app.controller('GameController', ["$scope", "$http","sessionService", "gameServi
 			$scope.rate = gameService.getRate();
 		}
 
-		$scope.myFactories = sessionService.getUser().factories;
+		$scope.myFactories = function() {
+			return sessionService.getUser().factories;
+		}
 		$scope.claim = function() {
 			gameService.claim();
 		}
