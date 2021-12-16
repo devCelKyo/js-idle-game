@@ -2,6 +2,7 @@ app.controller('GameController', ["$scope", "$http","sessionService", "gameServi
 	
 	function($scope, $http, sessionService, gameService) {
 		$scope.sessionService = sessionService;
+		$scope.gameService = gameService;
 
 		$scope.click = function() {
 			gameService.click();
@@ -12,14 +13,13 @@ app.controller('GameController', ["$scope", "$http","sessionService", "gameServi
 				$scope.factories = response.data.message;
 			});
 		
-		$scope.buyFactory = function(id) {
+		$scope.buyFactory = async function(id) {
 			gameService.buyFactory(id);
 			$scope.rate = gameService.getRate();
+			$scope.myFactories = sessionService.getUser().factories;
 		}
 
-		$scope.myFactories = function() {
-			return sessionService.getUser().factories;
-		}
+		$scope.myFactories = sessionService.getUser().factories;
 		$scope.claim = function() {
 			gameService.claim();
 		}

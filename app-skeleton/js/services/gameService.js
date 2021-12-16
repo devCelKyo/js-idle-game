@@ -21,6 +21,7 @@ app.factory('gameService', ["$http", "sessionService", "databaseService", functi
                         icon = "success";
                         databaseService.updateUser();
                     }
+
                     Swal.close();
                     Swal.fire({
                         icon: icon,
