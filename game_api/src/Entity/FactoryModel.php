@@ -140,6 +140,7 @@ class FactoryModel
         $factory->setModel($this);
         $factory->setLevel(1);
         $factory->setLastUpdate(new \DateTime());
+        $factory->setRate($this->getBaseRate());
 
         return $factory;
     }

@@ -7,6 +7,7 @@ use JMS\Serializer\SerializerInterface;
 use App\Classes\JSONResponse;
 use App\Entity\User;
 use App\Entity\Inventory;
+use App\Entity\ItemModel;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,6 +74,12 @@ class UserController extends AbstractController
         $password = $data->password;
         $money = 0;
         $inventory = new Inventory();
+        $fer = $this->getDoctrine()->getRepository(ItemModel::class)->findOneBy(["name" => "Fer"]);
+        $or = $this->getDoctrine()->getRepository(ItemModel::class)->findOneBy(["name" => "Or"]);
+        $inventory->addItem($fer);
+        $inventory->addItem($or);
+        $amounts = array(0, 0);
+        $inventory->setAmounts($amounts);
 
 
         $userRepository = $this->getDoctrine()->getRepository(User::class);

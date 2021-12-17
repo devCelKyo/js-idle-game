@@ -14,6 +14,7 @@ app.controller('SigninController', ["$scope", "$state","sampleFactory", "$http",
 		$scope.password = "";
 
 		$scope.register = function() {
+		Swal.showLoading();
 		var donnee = {
 			username : $scope.username,
 			password : $scope.password
@@ -34,7 +35,7 @@ app.controller('SigninController', ["$scope", "$state","sampleFactory", "$http",
 			else {
 				icon = 'error';
 			}
-
+			Swal.close();
 			Swal.fire({icon: icon, title: data.message})
 				.then(function() {
 					if (!error) {

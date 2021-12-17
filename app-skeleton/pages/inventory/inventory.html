@@ -1,0 +1,46 @@
+<div class="container" ng-controller="InventoryController">
+    <div class="row pt-3">
+        <h2>Inventaire</h2>
+        <div class="item-grid">
+            <div class="card item">
+                <img class="card-img-top" src="img/items/fer.png">
+                <div class="card-body">
+                    <h5 class="card-title">Fer</h5>
+                    Quantité : {{ inventoryService.getIron() }}
+                </div>
+            </div>
+            <div class="card item">
+                <img class="card-img-top" src="img/items/or.png">
+                <div class="card-body">
+                    <h5 class="card-title">Or</h5>
+                    Quantité : {{ inventoryService.getGold() }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <h2>Acheter des ressources - {{ sessionService.getUser().money }} pièces d'or</h2>
+        <div class="item-grid">
+            <div class="card item">
+                <img class="card-img-top" src="img/items/fer.png">
+                <div class="card-body">
+                    <h5 class="card-title">Fer : {{ ironPrice }}/u</h5>
+                    <div class="form-group">
+                        <input type="number" ng-model="amountIron" class="form-control" placeholder="quantité">
+                        <button class="btn btn-danger" ng-click="buyIron()">Acheter</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card item">
+                <img class="card-img-top" src="img/items/or.png">
+                <div class="card-body">
+                    <h5 class="card-title">Or : {{ goldPrice }}/u</h5>
+                    <div class="form-group">
+                        <input type="number" ng-model="amountGold" class="form-control" placeholder="quantité">
+                        <button class="btn btn-danger" ng-click="buyGold()">Acheter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

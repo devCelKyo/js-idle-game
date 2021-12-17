@@ -39,6 +39,11 @@ class Factory
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $rate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +64,13 @@ class Factory
     public function getRate(): ?int
     {
         return $this->getModel()->getBaseRate()*pow(1.5, $this->getLevel());
+    }
+
+    public function updateRate(): self
+    {
+        $this->setRate($this->getRate());
+
+        return $this;
     }
 
     public function getUpgradeCost(): ?Cost
@@ -127,6 +139,13 @@ class Factory
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function setRate(?int $rate): self
+    {
+        $this->rate = $rate;
 
         return $this;
     }

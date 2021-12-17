@@ -107,4 +107,68 @@ class GameController extends AbstractController
 
         return $this->createResponse($response);
     }
+
+    /**
+     * @Route("/buy_iron/{id}", name="buy_iron", methods={"POST"})
+     */
+    public function buyIron(User $user, Request $request): Response 
+    {
+        $data = json_decode($request->getContent());
+        $price = $data->price;
+        $amount = $data->amount;
+
+        $error = true;
+        $message = "Pas assez de thunes";
+        if ($user->getMoney() >= $price*$amount) {
+            $user->removeMoney($price*$amount);
+            $inventory = $user->getInventory();
+            $ironAmount = $inventory->getAmounts()[0] + $amount;
+            $goldAmount = $inventory->getAmounts()[1];
+            $inventory->setAmounts(array($ironAmount, $goldAmount));
+
+            $error = false;
+            $message = "Vous avez bien acheté Fer x".$amount;
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+
+        $response = new JSONResponse();
+        $response->setError($error);
+        $response->setMessage($message);
+
+        return $this->createResponse($response);
+    }
+
+    /**
+     * @Route("/buy_gold/{id}", name="buy_gold", methods={"POST"})
+     */
+    public function buyGold(User $user, Request $request): Response 
+    {
+        $data = json_decode($request->getContent());
+        $price = $data->price;
+        $amount = $data->amount;
+
+        $error = true;
+        $message = "Pas assez de thunes";
+        if ($user->getMoney() >= $price*$amount) {
+            $user->removeMoney($price*$amount);
+            $inventory = $user->getInventory();
+            $ironAmount = $inventory->getAmounts()[0];
+            $goldAmount = $inventory->getAmounts()[1] + $amount;
+            $inventory->setAmounts(array($ironAmount, $goldAmount));
+
+            $error = false;
+            $message = "Vous avez bien acheté Or x".$amount;
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+
+        $response = new JSONResponse();
+        $response->setError($error);
+        $response->setMessage($message);
+
+        return $this->createResponse($response);
+    }
 }   

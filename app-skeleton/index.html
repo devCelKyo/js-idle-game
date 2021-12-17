@@ -36,6 +36,9 @@
             <li ng-if="loginService.isLogged()" class="nav-item navelt">
               <a class="nav-link" ui-sref="game">Jouer ({{ sessionService.getUser().username }})</a>
             </li>
+            <li ng-if="loginService.isLogged()" class="nav-item navelt">
+              <a class="nav-link" ui-sref="inventory">Inventaire</a>
+            </li>
             <li ng-if="!loginService.isLogged()" class="nav-item navelt">
               <a class="nav-link" ui-sref="signin">Inscription</a>
             </li>
@@ -72,12 +75,15 @@
     <script src="js/services/loginService.js"></script>
     <script src="js/services/databaseService.js"></script>
     <script src="js/services/gameService.js"></script>
+    <script src="js/services/inventoryService.js"></script>
+    <script src="js/services/stockService.js"></script>
 
     <script src="js/navbarcontroller.js"></script>
     <script src="pages/home/homecontroller.js"></script>
     <script src="pages/game/gamecontroller.js"></script>
     <script src="pages/signin/signincontroller.js"></script>
     <script src="pages/login/logincontroller.js"></script>
+    <script src="pages/inventory/inventorycontroller.js"></script>
 
 
   </body>

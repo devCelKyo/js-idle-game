@@ -19,9 +19,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
 	  authenticate: false
    })
    .state('login', {
-      url:'/login',
+      url: '/login',
       templateUrl: 'pages/login/login.html',
 	  authenticate: false
+   })
+   .state('inventory', {
+      url: '/inventory',
+      templateUrl: 'pages/inventory/inventory.html',
+      authenticate: true
    });
 
     $urlRouterProvider.otherwise('home');

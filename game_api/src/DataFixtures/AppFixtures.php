@@ -22,6 +22,24 @@ class AppFixtures extends Fixture
         $model->setBaseRate(20);
         $model->setCost(new Cost());
         $manager->persist($model);
+
+        $iModel = new ItemModel();
+        $iModel->setName("Fer");
+        $iModel->setPrice(0);
+        $iModel->setIcon("fer.png");
+        $manager->persist($iModel);
+
+        $iModel = new ItemModel();
+        $iModel->setName("Or");
+        $iModel->setPrice(0);
+        $iModel->setIcon("or.png");
+        $manager->persist($iModel);
+
+        $iModel = new ItemModel();
+        $iModel->setName("Fer");
+        $iModel->setPrice(0);
+        $iModel->setIcon("fer.png");
+        $manager->persist($iModel);
         
         $manager->flush();
     }

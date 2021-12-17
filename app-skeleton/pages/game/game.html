@@ -26,8 +26,9 @@
 			<div class="factory-grid">
 				<div class="card" ng-repeat="factory in sessionService.getUser().factories track by factory.id">
 					<img class="card-img-top" src="img/factories/{{ factory.model.icon }}">
-					<div class="card-body">
-						<h5 class="card-title" style="color: black;">{{ factory.model.name }} (niveau {{factory.level}})</h5>
+					<div class="card-body" style="color: black;">
+						<h5 class="card-title">{{ factory.model.name }} (niveau {{factory.level}})</h5>
+						Production : {{ factory.rate }} po/sec
 						<button class="btn btn-success">Améliorer</button>
 					</div>
 				</div>

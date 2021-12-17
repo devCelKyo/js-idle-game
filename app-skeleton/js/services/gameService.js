@@ -49,6 +49,48 @@ app.factory('gameService', ["$http", "sessionService", "databaseService", functi
                 rate += factory.model.base_rate;
             }
             return rate;
+        },
+        buyIron:function(price, amount) {
+            let user = sessionService.getUser();
+            Swal.showLoading();
+            $http.post('http://localhost:8000/buy_iron/'+user.id, {price:price,amount:amount})
+                .then(function(response) {
+                    let rep = response.data;
+                    let icon;
+                    if(rep.error) {
+                        icon = "error";
+                    }
+                    else {
+                        icon = "success";
+                        databaseService.updateUser();
+                    }
+                    Swal.close();
+                    Swal.fire({
+                        icon: icon,
+                        title: rep.message
+                    });
+                })
+        },
+        buyGold:function(price, amount) {
+            let user = sessionService.getUser();
+            Swal.showLoading();
+            $http.post('http://localhost:8000/buy_gold/'+user.id, {price:price,amount:amount})
+                .then(function(response) {
+                    let rep = response.data;
+                    let icon;
+                    if(rep.error) {
+                        icon = "error";
+                    }
+                    else {
+                        icon = "success";
+                        databaseService.updateUser();
+                    }
+                    Swal.close();
+                    Swal.fire({
+                        icon: icon,
+                        title: rep.message
+                    });
+                })
         }
     };
 }]);
