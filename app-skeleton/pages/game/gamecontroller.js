@@ -1,8 +1,9 @@
-app.controller('GameController', ["$scope", "$http","sessionService", "gameService",
+app.controller('GameController', ["$scope", "$http","sessionService", "gameService", "inventoryService",
 	
-	function($scope, $http, sessionService, gameService) {
+	function($scope, $http, sessionService, gameService, inventoryService) {
 		$scope.sessionService = sessionService;
 		$scope.gameService = gameService;
+		$scope.inventoryService = inventoryService;
 
 		$scope.click = function() {
 			gameService.click();
@@ -15,8 +16,6 @@ app.controller('GameController', ["$scope", "$http","sessionService", "gameServi
 		
 		$scope.buyFactory = async function(id) {
 			gameService.buyFactory(id);
-			$scope.rate = gameService.getRate();
-			$scope.myFactories = sessionService.getUser().factories;
 		}
 
 		$scope.myFactories = sessionService.getUser().factories;
@@ -25,5 +24,9 @@ app.controller('GameController', ["$scope", "$http","sessionService", "gameServi
 		}
 
 		$scope.rate = gameService.getRate();
+
+		$scope.upgradeFactory = function(id) {
+			gameService.upgradeFactory(id);
+		}
 	}	
 ]);

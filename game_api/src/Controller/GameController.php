@@ -76,15 +76,21 @@ class GameController extends AbstractController
         $error = true;
         $message = "Pas assez de thunes";
         if ($user->canPay($cost)) {
-            $factory = $model->createFactory();
-            $user->pay($cost);
-            $user->addFactory($factory);
+            if ($user->countFactory($model->getName()) < 3) {
+                $factory = $model->createFactory();
+                $user->pay($cost);
+                $user->addFactory($factory);
+    
+                $error = false;
+                $message = "Factory achetée avec succès.";
 
-            $error = false;
-            $message = "Factory achetée avec succès.";
-
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+            }
+            else {
+                $error = true;
+                $message = "Vous ne pouvez pas acheter plus de 3 fois la même Factory";
+            }
         }
 
         $response = new JSONResponse();
@@ -150,7 +156,7 @@ class GameController extends AbstractController
         $amount = $data->amount;
 
         $error = true;
-        $message = "Pas assez de thunes";
+        $message = "Pas assez de flouz mgl";
         if ($user->getMoney() >= $price*$amount) {
             $user->removeMoney($price*$amount);
             $inventory = $user->getInventory();
@@ -167,6 +173,49 @@ class GameController extends AbstractController
 
         $response = new JSONResponse();
         $response->setError($error);
+        $response->setMessage($message);
+
+        return $this->createResponse($response);
+    }
+
+    /**
+     * @Route("/upgrade_factory/{id}", name="upgrade_factory", methods={"POST"})
+     */
+    public function upgradeFactory(Factory $factory): Response 
+    {
+        $upgradeCost = $factory->getUpgradeCost();
+        $owner = $factory->getUser();
+
+        $error = true;
+        $message = "Pas assez de flouz mgl vérifie";
+        if ($owner->canPay($upgradeCost)) {
+            $owner->pay($upgradeCost);
+            $factory->upgrade();
+
+            $error = false;
+            $message = "Ok nickel";
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+
+        $response = new JSONResponse();
+        $response->setError($error);
+        $response->setMessage($message);
+
+        return $this->createResponse($response);
+    }
+
+    /**
+     * @Route("/get_upgrade_cost/{id}", name="get_upgrade_cost", methods={"GET"})
+     */
+    public function getUpgradeCost(Factory $factory): Response 
+    {
+        $upgradeCost = $factory->getUpgradeCost();
+        $message = $upgradeCost;
+
+        $response = new JSONResponse();
+        $response->setError(false);
         $response->setMessage($message);
 
         return $this->createResponse($response);

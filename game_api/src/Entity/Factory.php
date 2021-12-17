@@ -61,14 +61,19 @@ class Factory
         return $this;
     }
 
-    public function getRate(): ?int
+    public function calculateRate(): ?int
     {
         return $this->getModel()->getBaseRate()*pow(1.5, $this->getLevel());
     }
 
+    public function getRate(): ?int
+    {
+        return $this->rate;
+    }
+
     public function updateRate(): self
     {
-        $this->setRate($this->getRate());
+        $this->setRate($this->calculateRate());
 
         return $this;
     }
@@ -82,7 +87,7 @@ class Factory
         $upgradeCostAmounts = array();
 
         foreach($baseCost->getItems() as $item) {
-            $newCost->addItem($item);
+            $upgradeCost->addItem($item);
         }
 
         foreach($baseCost->getAmounts() as $amount) {
@@ -91,6 +96,14 @@ class Factory
         $upgradeCost->setAmounts($upgradeCostAmounts);
 
         return $upgradeCost;
+    }
+
+    public function upgrade(): self 
+    {
+        $this->setLevel($this->getLevel() + 1);
+        $this->updateRate();
+
+        return $this;
     }
 
     public function getLastUpdate(): ?\DateTimeInterface

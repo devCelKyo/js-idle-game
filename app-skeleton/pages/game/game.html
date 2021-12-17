@@ -2,7 +2,7 @@
 	<div class="row pt-3">
 		<h1>Bienvenue {{ sessionService.getUser().username }} !</h1>
 		<h2>Tableau de bord</h2>
-		<p>Vous avez : {{ sessionService.getUser().money }} pièce(s) d'or</p>
+		<p>Vous avez : {{ sessionService.getUser().money }} pièce(s) d'or, {{ inventoryService.getIron() }} de fer, {{ inventoryService.getGold() }} d'or.</p>
 		<p>Vous produisez à une vitesse de {{ gameService.getRate() }} pièce(s) d'or par seconde</p>
 		<button ng-click="click()" class="btn btn-primary">Click ! (+1 pièce)</button>
 		<button class="btn btn-success mt-1" ng-click="claim()">Récupérer la production des usines</button>
@@ -14,8 +14,9 @@
 			<div class="factory-grid">
 				<div class="card" ng-repeat="factory in factories">
 					<img class="card-img-top" src="img/factories/{{ factory.icon }}">
-					<div class="card-body">
-						<h5 class="card-title" style="color: black;">{{ factory.name }}</h5>
+					<div class="card-body" style="color: black;">
+						<h5 class="card-title">{{ factory.name }}</h5>
+						<p>Fer : {{ factory.cost.amounts[0] }} // Or : {{ factory.cost.amounts[1] }}</p>
 						<button class="btn btn-danger" ng-click="buyFactory(factory.id)">Acheter</button>
 					</div>
 				</div>
@@ -28,8 +29,8 @@
 					<img class="card-img-top" src="img/factories/{{ factory.model.icon }}">
 					<div class="card-body" style="color: black;">
 						<h5 class="card-title">{{ factory.model.name }} (niveau {{factory.level}})</h5>
-						Production : {{ factory.rate }} po/sec
-						<button class="btn btn-success">Améliorer</button>
+						<p>Production : {{ factory.rate }} po/sec</p>
+						<button class="btn btn-success" ng-click="upgradeFactory(factory.id)">Améliorer</button>
 					</div>
 				</div>
 			</div>

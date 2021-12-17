@@ -72,7 +72,7 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent());
         $username = $data->username;
         $password = $data->password;
-        $money = 0;
+        $money = 50;
         $inventory = new Inventory();
         $fer = $this->getDoctrine()->getRepository(ItemModel::class)->findOneBy(["name" => "Fer"]);
         $or = $this->getDoctrine()->getRepository(ItemModel::class)->findOneBy(["name" => "Or"]);

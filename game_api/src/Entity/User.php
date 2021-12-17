@@ -199,6 +199,18 @@ class User
         return $this;
     }
 
+    public function countFactory(string $factoryName): int 
+    {
+        $count = 0;
+        foreach ($this->getFactories() as $factory) {
+            if ($factory->getModel()->getName() == $factoryName) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
     public function getInventory(): ?Inventory
     {
         return $this->inventory;

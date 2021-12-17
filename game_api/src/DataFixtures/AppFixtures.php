@@ -16,30 +16,30 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        $ferModel = new ItemModel();
+        $ferModel->setName("Fer");
+        $ferModel->setPrice(0);
+        $ferModel->setIcon("fer.png");
+        $manager->persist($ferModel);
+
+        $orModel = new ItemModel();
+        $orModel->setName("Or");
+        $orModel->setPrice(0);
+        $orModel->setIcon("or.png");
+        $manager->persist($orModel);
+
         $model = new FactoryModel();
         $model->setName("Première Factory");
         $model->setIcon("default.png");
         $model->setBaseRate(20);
-        $model->setCost(new Cost());
+        
+        $cost = new Cost();
+        $cost->addItem($ferModel);
+        $cost->addItem($orModel);
+        $cost->setAmounts(array(1, 0));
+
+        $model->setCost($cost);
         $manager->persist($model);
-
-        $iModel = new ItemModel();
-        $iModel->setName("Fer");
-        $iModel->setPrice(0);
-        $iModel->setIcon("fer.png");
-        $manager->persist($iModel);
-
-        $iModel = new ItemModel();
-        $iModel->setName("Or");
-        $iModel->setPrice(0);
-        $iModel->setIcon("or.png");
-        $manager->persist($iModel);
-
-        $iModel = new ItemModel();
-        $iModel->setName("Fer");
-        $iModel->setPrice(0);
-        $iModel->setIcon("fer.png");
-        $manager->persist($iModel);
         
         $manager->flush();
     }

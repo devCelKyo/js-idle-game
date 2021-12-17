@@ -115,8 +115,8 @@ class Inventory
     public function hasEnough(Cost $cost): bool 
     {
         for ($i = 0; $i < count($cost->getAmounts()); $i++) {
-            $model = $this->getItems()[$i];
-            $amount = $this->getAmounts()[$i];
+            $model = $cost->getItems()[$i];
+            $amount = $cost->getAmounts()[$i];
 
             if ($this->getAmount($model) < $amount) {
                 return false;

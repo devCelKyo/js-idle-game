@@ -22,4 +22,12 @@ app.controller("InventoryController", ["$scope", "sessionService", "inventorySer
         gameService.buyGold($scope.goldPrice, $scope.amountGold);
         $scope.amountGold = "";
     }
+
+    $scope.maxIron = function() {
+        $scope.amountIron = Math.floor(sessionService.getUser().money/$scope.ironPrice);
+    }
+
+    $scope.maxGold = function() {
+        $scope.amountGold = Math.floor(sessionService.getUser().money/$scope.goldPrice);
+    }
 }]);

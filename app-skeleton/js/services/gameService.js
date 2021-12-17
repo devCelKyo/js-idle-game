@@ -29,6 +29,27 @@ app.factory('gameService', ["$http", "sessionService", "databaseService", functi
                     });
                 });
         },
+        upgradeFactory:function(id) {
+            Swal.showLoading();
+            $http.post('http://localhost:8000/upgrade_factory/'+id)
+            .then(function(response) {
+                let rep = response.data;
+                let icon;
+                if (rep.error) {
+                    icon = "error";
+                }
+                else {
+                    icon = "success";
+                    databaseService.updateUser();
+                }
+
+                Swal.close();
+                Swal.fire({
+                    icon: icon,
+                    title: rep.message
+                });
+            });
+        },
         claim:function() {
             let user = sessionService.getUser();
             Swal.showLoading();
@@ -46,7 +67,7 @@ app.factory('gameService', ["$http", "sessionService", "databaseService", functi
             let user = sessionService.getUser();
             let rate = 0;
             for (const factory of user.factories) {
-                rate += factory.model.base_rate;
+                rate += factory.rate;
             }
             return rate;
         },
