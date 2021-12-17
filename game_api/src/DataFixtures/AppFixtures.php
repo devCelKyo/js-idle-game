@@ -32,12 +32,32 @@ class AppFixtures extends Fixture
         $model->setName("Première Factory");
         $model->setIcon("default.png");
         $model->setBaseRate(20);
-        
         $cost = new Cost();
         $cost->addItem($ferModel);
         $cost->addItem($orModel);
         $cost->setAmounts(array(1, 0));
+        $model->setCost($cost);
+        $manager->persist($model);
 
+        $model = new FactoryModel();
+        $model->setName("Super Factory");
+        $model->setIcon("factory2.png");
+        $model->setBaseRate(2000);
+        $cost = new Cost();
+        $cost->addItem($ferModel);
+        $cost->addItem($orModel);
+        $cost->setAmounts(array(5000, 200));
+        $model->setCost($cost);
+        $manager->persist($model);
+
+        $model = new FactoryModel();
+        $model->setName("Giga Factory nofake");
+        $model->setIcon("factory3.png");
+        $model->setBaseRate(100000);
+        $cost = new Cost();
+        $cost->addItem($ferModel);
+        $cost->addItem($orModel);
+        $cost->setAmounts(array(5000000, 200000));
         $model->setCost($cost);
         $manager->persist($model);
         
